@@ -1,0 +1,103 @@
+import Planeta.*
+import docentes.*
+import atleta.*
+import Personas.*
+
+test "escenario Basico" {
+	var julieta = new Personas()
+	julieta.setEdad(42)
+	assert.equals(20, julieta.potencia())
+	assert.equals(8,julieta.inteligencia())
+	assert.that(not julieta.esDestacado())
+	var ana = new Atleta()
+	ana.setEdad(25)
+	assert.equals(28,ana.potencia())
+	assert.equals(12, ana.inteligencia())
+	assert.that(ana.esDestacado())
+	var rosa = new Atleta()
+	rosa.setEdad(45)
+	//reparar
+	rosa.aprenderUnaTecnica()
+	rosa.aprenderUnaTecnica()
+	rosa.aprenderUnaTecnica()
+	rosa.aprenderUnaTecnica()
+	rosa.aprenderUnaTecnica()
+	rosa.aprenderUnaTecnica()
+	assert.equals(52, rosa.potencia())
+	assert.equals(8, rosa.inteligencia())
+	assert.that(rosa.esDestacado())
+	var perla = new Atleta()
+	perla.setEdad(28)
+	perla.aprenderUnaTecnica()
+	perla.aprenderUnaTecnica()
+	perla.entrenar()
+	perla.entrenar()
+	assert.equals(44,perla.potencia() )
+	assert.equals(12, perla.inteligencia())
+	assert.that(not perla.esDestacado())
+	var monica = new Docentes()
+	monica.setEdad(45)
+	monica.setCursos(6)
+	assert.equals(20,monica.potencia())
+	assert.equals(20, monica.inteligencia())
+	assert.that(monica.esDestacado())
+	var luisa = new Docentes()
+	luisa.setEdad(35)
+	luisa.setCursos(1)
+	assert.equals(20,luisa.potencia())
+	assert.equals(14, luisa.inteligencia())
+	assert.that(not luisa.esDestacado())
+	var planeta = new Planeta()
+	planeta.agregarPersona(monica)
+	planeta.agregarPersona(luisa)
+	planeta.agregarPersona(perla)
+	planeta.agregarPersona(rosa)
+	planeta.agregarPersona(ana)
+	planeta.agregarPersona(julieta)
+	assert.equals([monica,rosa,ana] ,planeta.delegacionDiplomatica())
+	assert.equals(2, planeta.valorInicialDefensa())
+	assert.that(not planeta.esCulto())
+	assert.equals(184, planeta.potenciaReal())
+	perla.entrenar()
+	perla.entrenar()
+	perla.entrenar()
+	assert.that(not perla.esDestacado())
+	perla.aprenderUnaTecnica()
+	perla.aprenderUnaTecnica()
+	assert.that( perla.esDestacado())
+	//test por mi cuenta
+	assert.that(planeta.necesitaReforzarse())
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+}

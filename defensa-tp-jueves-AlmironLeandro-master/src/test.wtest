@@ -1,0 +1,86 @@
+import wollok.game.*
+import pachamama.*
+import plantas.*
+import toni.*
+
+test "nuevo"{
+	//Primer item
+	pachamama.agradecimiento(30)
+	assert.that(pachamama.estaChocha())
+	//segundo item
+	var maizAndino = new MaizAndino()
+	toni.agregarPlanta(maizAndino)
+	toni.regarLasPlantas()
+	assert.that(pachamama.estaChocha())
+	toni.regarLasPlantas()
+	toni.regarLasPlantas()
+	toni.regarLasPlantas()
+	toni.cosecharTodo()
+	toni.venderCosecha()
+	assert.equals(220,toni.oroRecolectado())
+	
+}
+test "tercer"{
+	//tercer item
+	// riega una sola
+	var maiz = new Maiz()
+	var trigo = new Trigo()
+	var maizAndino = new MaizAndino()
+	assert.that(not pachamama.estaAgradecida())
+	maiz.riegoPotenciado()
+	trigo.riegoPotenciado()
+	maizAndino.riegoPotenciado()
+	assert.equals(100,trigo.oro())
+}
+test "tercero"{
+	//tercer item
+	//riega 2
+	var maiz = new Maiz()
+	var trigo = new Trigo()
+	var maizAndino = new MaizAndino()
+	pachamama.agradecimiento(30)
+	assert.that(pachamama.estaAgradecida())
+	maiz.riegoPotenciado()
+	trigo.riegoPotenciado()
+	trigo.riegoPotenciado()
+	maizAndino.riegoPotenciado()
+	assert.equals(200,trigo.oro())
+	
+}
+test "ULTIMO"{
+	//no esta contento
+	var trigo = new Trigo()
+	var trigo1 = new Trigo()
+	toni.agregarPlanta(trigo)
+	toni.agregarPlanta(trigo1)
+	trigo.riegoPotenciado()
+	trigo.riegoPotenciado()
+	trigo1.riegoPotenciado()
+	trigo1.riegoPotenciado()
+	toni.cosecharTodo()
+	toni.venderCosecha()
+	assert.that(not toni.estaContento())
+	assert.equals(200, toni.oroRecolectado())
+}
+test "ULTIMOb"{
+	//esta contento
+	pachamama.agradecimiento(30)
+	var trigo = new Trigo()
+	var trigo1 = new Trigo()
+	var trigo2 = new Trigo()
+	toni.agregarPlanta(trigo)
+	toni.agregarPlanta(trigo1)
+	toni.agregarPlanta(trigo2)
+	trigo.riegoPotenciado()
+	trigo.riegoPotenciado()
+	trigo1.riegoPotenciado()
+	trigo.riegoPotenciado()
+	trigo1.riegoPotenciado()
+	trigo2.riegoPotenciado()
+	
+	toni.cosecharTodo()
+	assert.that(not toni.estaContento())
+	toni.venderCosecha()
+	assert.that(toni.estaContento())
+	assert.equals(600, toni.oroRecolectado())
+}

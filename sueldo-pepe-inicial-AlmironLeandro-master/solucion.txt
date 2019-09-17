@@ -1,0 +1,57 @@
+
+/**Calcular sueldo de pepe*/
+neto=/* Manualmente*/
+bono=
+gerente=$15.000
+cadete=$20.000
+sueldo=0
+/***Comienza los bono por resultado****/
+bonoPorcentaje=sueldo*0.10
+montoFijo=sueldo+$800
+Nulo=sueldo+0
+bono
+
+sueldodepepe()
+{
+	if(neto=gerente)
+		sueldo=$15.000
+	else
+		sueldo=$20.000
+}
+bono(sueldo)
+{
+	----entrada de dato---(input)
+	if(opcion1=normal)
+		neto=neto+$2000
+
+	if(opcion2=Ajuste)
+		neto=neto+ajuste
+
+	if(opcion3=Demagogico)
+		neto=neto+$500
+	if(opcion4=Nulo)
+		neto=neto+0
+}
+/**nuevo**/
+ #Variables globales
+neto=0
+bono=0
+gerente=15.000
+cadete=20.000
+sueldo=0
+#Comienza los bono por resultado
+bonoPorcentaje=sueldo*0.10
+montoFijo=sueldo+800
+Nulo=sueldo+0
+#bonoPresentismo
+def sueldoPepe():
+{
+    neto=str(input("Ingrese la categoria, cadete o gerente"))
+        if(neto==gerente):
+            sueldo=gerente
+                print("Usted a seleccionado gerente")
+        else(neto==cadete):
+            sueldo=cadete
+                print("Usted a seleccionado cadete")
+}
+

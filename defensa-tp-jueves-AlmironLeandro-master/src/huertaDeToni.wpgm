@@ -1,0 +1,168 @@
+import wollok.game.*
+import configJuego.*
+import toni.*
+import plantas.*
+import mercado.*
+import pachamama.*
+
+program huertaDeToni {
+	game.width(configPacman.ejeX())
+	game.height(configPacman.ejeY())
+	game.ground("tierra.png")
+	
+	game.addVisual(toni)
+	game.addVisual( mercadoNorte)
+	game.addVisual( mercadoSur )
+	game.addVisual(pachamama)
+	
+	
+	
+	
+	//desplazamientos para toni
+	
+	keyboard.left().onPressDo({toni.moveLeft()})
+	keyboard.right().onPressDo({toni.moveRight()})
+	keyboard.down().onPressDo({toni.moveDown()})
+	keyboard.up().onPressDo({toni.moveUp()})
+	
+	
+	//objectos PLANTAS agregados
+		keyboard.m().onPressDo({
+		const colliders = game.colliders(toni)
+		if (not colliders.isEmpty()) 
+			throw new Exception("Ya existe una planta aca")
+		
+		var maiz = new Maiz() 
+		toni.agregarPlanta(maiz)
+		game.addVisualIn(maiz,toni.position())
+	})
+	
+	keyboard.t().onPressDo({ 
+		
+		const colliders = game.colliders(toni)
+		if (not colliders.isEmpty()) 
+			throw new Exception("Ya existe una planta aca")
+		var trigo = new Trigo() 
+		toni.agregarPlanta(trigo) 
+		game.addVisualIn(trigo,toni.position())
+	})
+	
+	keyboard.o().onPressDo({
+		
+		const colliders = game.colliders(toni)
+		if (not colliders.isEmpty()) 
+			throw new Exception("Ya existe una planta aca")
+		var tomaco = new Tomaco() 
+		toni.agregarPlanta(tomaco) 
+		game.addVisualIn(tomaco,toni.position())
+	})	
+//BONUS
+	keyboard.j().onPressDo({ 
+		var colliders = game.colliders(toni)
+		(0..configPacman.ejeX()).forEach{x=> 
+		if(colliders.isEmpty()){
+		toni.sembrarHorizontal()
+		toni.moveRight()
+		colliders = game.colliders(toni)}
+		else{
+			toni.moveRight()
+			colliders = game.colliders(toni)
+		}
+		}})
+keyboard.h().onPressDo({
+		var colliders = game.colliders(toni)
+		(0..configPacman.ejeX()).forEach{ x=> 
+			colliders.forEach({planta=>
+				if(toni.puedeCosechar(planta)){
+				game.removeVisual(planta)
+				toni.cosecharPlanta(planta)
+				toni.moveRight()
+				colliders = game.colliders(toni)
+				}else{
+				toni.moveRight()
+				colliders = game.colliders(toni)	
+				}})
+	}})
+		// REPARAR FACILIDADES PARA COSECHAR
+	keyboard.y().onPressDo({
+		var colliders = game.colliders(toni)
+		(0..configPacman.ejeY()).forEach{ y=> 
+			colliders.forEach({planta=>
+				if(toni.puedeCosechar(planta)){
+				game.removeVisual(planta)
+				toni.cosecharPlanta(planta)
+				toni.moveUp()
+				colliders = game.colliders(toni)
+				}else{
+				toni.moveUp()
+				colliders = game.colliders(toni)	
+				}})
+	}})
+	keyboard.u().onPressDo({
+		var colliders = game.colliders(toni)
+		(0..configPacman.ejeY()).forEach{x=> 
+		if(colliders.isEmpty()){
+		toni.sembrarVertical()
+		toni.moveUp()
+		colliders = game.colliders(toni)}
+		else{
+			toni.moveUp()
+			colliders = game.colliders(toni)
+		}
+		}})
+	//teclas de accion
+	keyboard.a().onPressDo({toni.regarLasPlantas()})
+	keyboard.r().onPressDo({toni.regarPlanta().forEach({ plant => plant.madurar()})})
+	keyboard.f().onPressDo({pachamama.fumigar() game.say(pachamama,"skeree")})
+	keyboard.l().onPressDo({pachamama.llover()})
+	keyboard.x().onPressDo({
+		toni.plantasListasParaCosechar().forEach({planta=> game.removeVisual(planta)})
+		toni.cosecharTodo() 
+	})
+
+	
+	keyboard.c().onPressDo({
+		if(toni.collider().isEmpty()){
+				throw new Exception("No hay nada para cosechar")
+			}
+		
+		toni.collider().forEach
+		({ planta =>
+			if(not toni.plantasListasParaCosechar().contains(planta)){
+			throw new Exception("No se puede cosechar")
+		}
+			toni.plantasListas().add(planta)
+			game.removeVisual(planta)
+		})
+	})
+	keyboard.space().onPressDo
+	({game.say(toni,"Tengo " + toni.oroRecolectado() + " y me quedan " + 
+		toni.plantasListas().size() + " plantas para vender."
+	)})
+
+	keyboard.v().onPressDo({
+		const colliders = game.colliders(toni)
+		if(not (colliders.contains(mercadoNorte) or  colliders.contains(mercadoSur))){
+			throw new Exception("No estas en un mercado")
+		}
+		if( not colliders.all({market=>market.oro()>toni.oroRecolectado()})){
+			throw new Exception("El mercado no tiene suficiente dinero ")
+		}
+		
+		colliders.forEach({	market=>market.comprarMercaderiaA(toni)})
+		toni.venderCosecha()
+	})
+	keyboard.q().onPressDo({
+		toni.toniConMaiz()
+		
+	})
+	game.whenCollideDo(pachamama,{persona=>
+		persona.position(persona.position().down(2))
+		pachamama.moveRight()
+		game.removeVisual(persona.plantasSembradas().anyOne())
+		pachamama.recibirOfrenda()
+		toni.tonSinMaiz()
+		})
+	
+	game.start()
+}

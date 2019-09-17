@@ -1,0 +1,12 @@
+import camion.*
+import cosas.*
+test "pesoTotal" {
+
+	camion.cargar(bumblebee)
+	camion.cargar(bumblebee)
+	assert.equals(2600,camion.pesoTotal())
+
+}
+test "Paquete de ladrillos"{
+	
+}

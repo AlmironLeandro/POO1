@@ -1,0 +1,41 @@
+import wollok.game.*
+import animales.*
+
+program animales {
+	// configuracion de pantalla
+	game.width(15)
+	game.height(15)
+	//objectos creados
+	var comedorNormal= new Comedor()
+	var animalActual = new Vaca()
+	var gallina = new Gallina()
+	//letras asignadas 
+	keyboard.h().onPressDo({
+	if(animalActual.tieneSed()){game.say(animalActual,"no tiene sed")}
+	else{game.say(animalActual,"tiene sed")}
+		})
+	keyboard.b().onPressDo({ animalActual.beber() })
+	keyboard.p().onPressDo({ game.say(animalActual, animalActual.peso().toString()) })
+	keyboard.v().onPressDo({
+	if(animalActual.tieneSed()){game.say(animalActual,"no tiene sed")}
+	else{game.say(animalActual,"tiene sed")}
+		})
+	keyboard.c().onPressDo({ animalActual.comer(12) })
+	//cambia el animalActual por una Gallina
+	keyboard.g().onPressDo({game.removeVisual(animalActual)  
+		animalActual = gallina game.addVisual(animalActual)
+	})
+	//cambia el animalActual por una Vaca
+	keyboard.j().onPressDo({game.removeVisual(animalActual)  
+		animalActual = new Vaca() game.addVisual(animalActual)
+	})
+	//desplazamientos
+	keyboard.left().onPressDo({animalActual.moveLeft()})
+	keyboard.right().onPressDo({animalActual.moveRight()})
+	keyboard.down().onPressDo({animalActual.moveDown()})
+	keyboard.up().onPressDo({animalActual.moveUp()})
+	//
+	game.addVisual(animalActual)
+	game.addVisual(comedorNormal)
+	game.start()
+}

@@ -1,0 +1,13 @@
+import aves.*
+import islas.*
+
+test "testX" {
+	var aguiluchoColorado1 = new AguiluchosColorados()
+	var albatros1 		   = new Albatros()
+	var palomaTorcaza1	   = new PalomasTorcazas()
+	var islita1			   = new Islas()
+	islita1.agregarAve(aguiluchoColorado1)
+	islita1.agregarAve(albatros1)
+	islita1.agregarAve(palomaTorcaza1)
+	//assert.that(true, albatros1.irAlGimnasio())
+}

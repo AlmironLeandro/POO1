@@ -1,0 +1,24 @@
+import pepita.*
+
+// auto-generated at 28/03/2019 15:19:43
+test "exported test from REPL session" {
+	
+	howAreYou()
+	object.howAreYou()
+	method.howAreYou()
+	object.wollok(howAreYou)
+	object.wollok(howAreYou)
+	method.wollok(howAreYou)
+	object.wollok.(howAreYou)
+	object.wollok()
+	object.howAreYou()
+	pepita.bailar(10)
+	pepita.bailar(10)
+	pepita.bailar(10)
+	pepita.energia()
+	pepita.bailar(10)
+	pepita.comer(200)
+	pepita.bailar(10)
+	pepita.bailar(10)
+	
+}
